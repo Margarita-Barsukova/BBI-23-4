@@ -1,0 +1,49 @@
+//уровень 1 номер 2
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+// Определение структуры Runner
+struct Runner
+{
+    public string LastName;
+    public string Group;
+    public string TeacherLastName;
+    public double Result; // Время в секундах
+
+    public Runner(string lastName, string group, string teacherLastName, double result)
+    {
+        LastName = lastName;
+        Group = group;
+        TeacherLastName = teacherLastName;
+        Result = result;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Список участниц
+        List<Runner> runners = new List<Runner>
+        {
+            new Runner("Иванова", "Группа 1", "Петров", 115),
+            new Runner("Петрова", "Группа 1", "Иванов", 130),
+            // Можно добавить больше участников здесь
+        };
+
+        // Сортировка участниц по результату
+        var sortedRunners = runners.OrderBy(r => r.Result).ToList();
+
+        Console.WriteLine("Фамилия\tГруппа\tПреподаватель\tРезультат\tНорматив");
+        foreach (var runner in sortedRunners)
+        {
+            string normative = runner.Result <= 120 ? "Выполнен" : "Не выполнен";
+            Console.WriteLine($"{runner.LastName}\t{runner.Group}\t{runner.TeacherLastName}\t{runner.Result}\t{normative}");
+        }
+
+        // Подсчёт участниц, выполнивших норматив
+        int normativePassed = sortedRunners.Count(r => r.Result <= 120);
+        Console.WriteLine($"\nСуммарное количество участниц, выполнивших норматив: {normativePassed}");
+    }
+}
